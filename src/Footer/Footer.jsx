@@ -7,7 +7,7 @@ const Footer = () => {
         {/* logo */}
         <div className="part-1 flex items-center gap-2">
           <div className="w-10">
-            <img src="/images/logo-gray.png" alt="" />
+            <img src="logo.png" alt="" />
           </div>
           <div>
             <h1 className="text-[1.6rem] font-inter text-gray-500">
