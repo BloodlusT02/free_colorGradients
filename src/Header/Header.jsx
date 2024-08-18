@@ -5,17 +5,16 @@ const Header = () => {
   const [darkMode, setDarkMode] = useState("dark");
 
   useEffect(() => {
-
     const htmlEl = document.querySelector("html");
 
     if (isChecked) {
-      setDarkMode("light");
-      htmlEl.classList.remove("light");
-      htmlEl.classList.add("dark");
-    } else {
       setDarkMode("dark");
       htmlEl.classList.remove("dark");
       htmlEl.classList.add("light");
+    } else {
+      setDarkMode("light");
+      htmlEl.classList.remove("light");
+      htmlEl.classList.add("dark");
     }
   }, [isChecked]);
 
@@ -23,14 +22,12 @@ const Header = () => {
     setIsChecked(!isChecked);
   };
 
-  
-
   return (
-    <>
-      <div className="flex items-center justify-between py-6 px-6 md:px-10 lg:px-36">
+    <div className="fixed top-0 left-0 w-full z-50 dark:bg-black bg-white">
+      <div className="flex items-center justify-between py-4 px-6 md:px-10 lg:px-36">
         <div className="part-1 flex items-center gap-1">
           <div className="w-9 md:w-10 lg:w-12">
-            <img className="object-cover" src="logo.png" alt="" />
+            <img className="object-cover" src="logo.png" alt="Logo" />
           </div>
           <div>
             <h1 className="text-[1.7rem] lg:text-[1.8rem] font-inter dark:text-white">
@@ -63,7 +60,7 @@ const Header = () => {
           </label>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

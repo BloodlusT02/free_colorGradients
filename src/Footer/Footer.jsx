@@ -25,7 +25,7 @@ const Footer = () => {
             <span>
               <img
                 className="w-6 rounded-full"
-                src="/images/profile.jpg"
+                src="/profile.jpg"
                 alt=""
               />
             </span>

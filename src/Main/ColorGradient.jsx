@@ -2,47 +2,23 @@ import React, { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import color from "../Gradients/colorGradient.js";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
+import { AiFillCheckCircle } from 'react-icons/ai';
+import { MdDone } from "react-icons/md";
+import toast, { Toaster } from "react-hot-toast";
+
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      toast.success('Color copied to clipboard!'); // Show success notification
+    })
+    .catch((error) => {
+      console.error('Failed to copy: ', error);
+      toast.error('Failed to copy!'); // Show error notification
+    });
+};
+
 
 const ColorGradient = () => {
-  const [notification, setNotification] = useState({
-    visible: false,
-    text: "",
-  });
-
-  const handleCopy = (text) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        setNotification({ visible: true, text });
-        setTimeout(() => setNotification({ visible: false, text: "" }), 2000); // Hide after 2 seconds
-      })
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
-  };
-
-  const noticeRef = useRef();
-
-  useEffect(() => {
-    if (notification.visible) {
-      gsap.fromTo(
-        noticeRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "ease-out" }
-      );
-
-      const timer = setTimeout(() => {
-        gsap.to(noticeRef.current, {
-          opacity: 0,
-          y: 50,
-          duration: 0.4,
-          ease: "ease-in"
-        });
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification.visible]);
 
   return (
     <>
@@ -61,7 +37,10 @@ const ColorGradient = () => {
           {color.map((gradient, index) => {
             return (
               <div
-                onClick={() => handleCopy(gradient.colorGradient)}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent `onClick`
+                copyToClipboard(gradient.colorGradient); // Copy gradient color
+              }}
                 key={index}
                 style={{ background: gradient.colorGradient }}
                 className={`w-full h-[380px] six-twenty:w-[270px] relative cursor-pointer`}
@@ -82,24 +61,14 @@ const ColorGradient = () => {
           })}
         </div>
       </div>
-
-      {/* Notification Component */}
-      {notification.visible && (
-        <div className="fixed bottom-10 w-full flex items-center justify-center">
-          <div
-            ref={noticeRef}
-            className="px-10 py-4 bg-white text-black rounded-lg shadow-lg"
-          >
-            <p className="font-roboto text-sm md:text-base">
-              <span className="bg-green-400 px-[3px] rounded-full">
-                <i className="ri-check-line"></i>
-              </span>{" "}
-              {notification.text}
-            </p>
-          </div>
-        </div>
-      )}
-
+      <Toaster toastOptions={{
+        style: {
+          backgroundColor: "#1e293b",
+          borderRadius: "60px",
+          padding: '14px 30px',
+          color: "white"
+        }
+      }} position="bottom-center" />
       <hr className="dark:opacity-30" />
     </>
   );

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Mark Pro';
+    src: url(/fonts/MarkPro-Regular.ttf);
+}
+
+.markpro{
+    font-family: 'Mark Pro';
+}

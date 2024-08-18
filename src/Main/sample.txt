@@ -1,0 +1,124 @@
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import colors from "../Gradients/colors";
+
+const Colors = ({ num, color }) => {
+  const [popups, setPopups] = useState([]);
+  const popupRefs = useRef([]);
+
+  const colorNum = [
+    "50",
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "950",
+  ];
+
+  useEffect(() => {
+    // Only animate if there are popups
+    if (popups.length) {
+      const latestPopupIndex = popups.length - 1;
+
+      // Animate the new popup in
+      const newPopup = popupRefs.current[latestPopupIndex];
+      gsap.fromTo(newPopup,
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+      );
+
+      // Animate the old popups out
+      if (popups.length > 1) {
+        popups.slice(0, -1).forEach((_, index) => {
+          const oldPopup = popupRefs.current[index];
+          gsap.to(oldPopup, {
+            y: -100,
+            opacity: 0,
+            duration: 1,
+            ease: "power2.out",
+          });
+        });
+
+        // Remove old popups after animation
+        setTimeout(() => {
+          setPopups((prev) => prev.slice(-1));
+        }, 1000); // Duration of the animation
+      }
+    }
+  }, [popups]);
+
+  const handleCopy = (colorValue) => {
+    if (colorValue) {
+      navigator.clipboard.writeText(colorValue)
+        .then(() => {
+          console.log(`Copied: ${colorValue}`);
+          setPopups((prev) => [...prev, `Copied: ${colorValue}`]);
+        })
+        .catch((err) => {
+          console.error('Failed to copy text: ', err);
+        });
+    } else {
+      console.error('Color value is undefined');
+    }
+  };
+
+  return (
+    <>
+      <div className="dark:text-white h-screen px-6 pb-8 md:px-10 lg:px-36 overflow-auto no-scrollbar">
+        <div className="font-inter mt-6">
+          <h2 className="text-[3rem] font-bold">Customizing Colors</h2>
+          <p className="text-[1.1rem] font-poppins text-gray-500">
+            Customizing the default color palette for your project.
+          </p>
+        </div>
+        <div className="dark:text-white font-inter mt-8">
+          {colors.map((color) => (
+            <div key={color.name}>
+              <div className="text-[1.1rem] tracking-wide capitalize font-semibold mt-6">
+                {color.name}
+              </div>
+              <div className="flex gap-4">
+                {colorNum.map((num) => (
+                  <div
+                    key={num}
+                    onClick={() => handleCopy(color[num])}
+                    className={`${num} flex flex-col cursor-pointer`}
+                  >
+                    <div
+                      className="w-24 h-12 bg-white mt-2 rounded-md border-2 border-gray-500"
+                      style={{ backgroundColor: color[num] }}
+                    >
+                      {color[num]}
+                    </div>
+                    <p className="dark:text-white text-sm pt-1 px-2">{num}</p>
+                    <p className="text-gray-500 text-sm tracking-wider px-2">{color[num]}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Popup Messages */}
+      {popups.map((popup, index) => (
+        <div
+          key={index}
+          ref={(el) => (popupRefs.current[index] = el)}
+          className={`fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-${index * 16} bg-black text-white text-sm px-4 py-2 rounded-lg`}
+        >
+          {popup}
+        </div>
+      ))}
+
+      <hr className="dark:opacity-30" />
+    </>
+  );
+};
+
+export default Colors;

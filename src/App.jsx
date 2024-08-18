@@ -1,17 +1,19 @@
-import { useState } from 'react'
-import ColorGradient from './Main/ColorGradient'
-import Header from './Header/Header'
-import Footer from './Footer/Footer'
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
+import ColorBar from "./Main/ColorBar";
+import { Outlet } from "react-router-dom";
 
 function App() {
-
   return (
     <>
       <Header />
-      <ColorGradient />
+      <ColorBar />
+      <div className="pt-[150px] flex-grow overflow-y-auto px-4">
+        <Outlet />
+      </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
