@@ -12,8 +12,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='/' element={<ColorPalette />} />
-      <Route path='colors' element={<Colors />} />
-      <Route path='gradients' element={<ColorGradient />} />
+      <Route path='/colors' element={<Colors />} />
+      <Route path='/gradients' element={<ColorGradient />} />
     </Route>
   )
 )

@@ -8,8 +8,8 @@ export default {
     extend: {
       fontFamily: {
         "inter": "Inter",
-        "ibm-plex": "IBM Plex Serif",
-        "roboto": "Roboto Mono",
+        "ibm-plex": ["IBM Plex Serif", "sans-serif"],
+        "roboto": ["Roboto Mono", "sans-serif"],
         "poppins": ["Poppins", "sans-serif"]
       },
       backgroundImage: {
