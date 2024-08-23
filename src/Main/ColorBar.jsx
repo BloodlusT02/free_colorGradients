@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ColorBar.css";
 import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ColorBar = () => {
   const location = useLocation();
@@ -9,7 +10,7 @@ const ColorBar = () => {
   const navItems = [
     { name: "Palettes", path: "/" },
     { name: "Colors", path: "/colors" },
-    { name: "Gradients", path: "/gradients" }
+    { name: "Gradients", path: "/gradients" },
   ];
 
   useEffect(() => {
@@ -32,11 +33,12 @@ const ColorBar = () => {
         <hr className="dark:opacity-30" />
         <div className="h-14 flex items-center justify-center gap-3 md:gap-5 my-1">
           {navItems.map((item) => (
-            <Link
-              to={item.path}
-              key={item.name}
-              onClick={() => handleNavClick(item.name)}
-              className={`
+            <Link key={item.name} to={item.path}>
+              <motion.div
+                onClick={() => handleNavClick(item.name)}
+                whileHover={{ scale: 1.09 }}
+                whileTap={{ scale: 0.9 }}
+                className={`
                 markpro uppercase font-extrabold text-xs md:text-sm tracking-wide px-4 py-1 md:px-6 md:py-2 rounded-full 
                 gradient-border dark:gradient-border-dark inline-block bg-transparent cursor-pointer 
                 ${
@@ -44,10 +46,11 @@ const ColorBar = () => {
                     ? "dark:text-white text-black"
                     : "dark:text-gray-400 text-gray-400"
                 } 
-                dark:hover:text-white hover:text-black transition ease-in-out duration-300
+                dark:hover:text-white hover:text-black
               `}
-            >
-              {item.name}
+              >
+                {item.name}
+              </motion.div>
             </Link>
           ))}
         </div>

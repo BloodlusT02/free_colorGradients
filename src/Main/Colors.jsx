@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import colors from "../Gradients/colors";
 import { copyToClipboard } from "./ColorGradient";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const Colors = ({ num, color }) => {
   const colorNum = [
@@ -45,10 +46,12 @@ const Colors = ({ num, color }) => {
                     key={num}
                     className="flex flex-col cursor-pointer"
                   >
-                    <div
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       className="w-full h-12 sm:h-16 md:h-20 bg-white rounded-md border-[1.6px] border-gray-500"
                       style={{ backgroundColor: color[num] }}
-                    ></div>
+                    ></motion.div>
                     <p className="dark:text-white text-xs sm:text-sm font-medium mt-1 pl-1">
                       {num}
                     </p>

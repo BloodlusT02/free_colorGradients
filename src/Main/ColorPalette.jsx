@@ -8,7 +8,6 @@ import { copyToClipboard } from "./ColorGradient.jsx";
 import toast, { Toaster } from "react-hot-toast";
 
 const ColorPalette = () => {
-  // Initialize state from localStorage or default to an array with 0 count and not liked
   const [likes, setLikes] = useState(() => {
     try {
       const savedLikes = localStorage.getItem("likes");
@@ -86,7 +85,7 @@ const ColorPalette = () => {
         <div className="py-16 flex flex-wrap gap-10 justify-center overflow-hidden">
           {colorPaletee.map((color, index) => (
             <div className="part-1" key={color.id}>
-              <div className="h-32 w-[380px] bg-white rounded-lg flex flex-grow overflow-hidden">
+              <div className="h-32 w-[380px] rounded-lg flex flex-grow overflow-hidden bg-black">
                 {["first", "second", "third", "fourth", "fifth"].map(
                   (key, idx) => (
                     <div

@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import color from "../Gradients/colorGradient.js";
 import { MdOutlineArrowRightAlt } from "react-icons/md";
-import { AiFillCheckCircle } from 'react-icons/ai';
-import { MdDone } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text)
@@ -36,7 +35,9 @@ const ColorGradient = () => {
         <div className="mt-10 flex flex-col six-twenty:flex-row six-twenty:flex-wrap six-twenty:justify-center lg:justify-start py-10 gap-6">
           {color.map((gradient, index) => {
             return (
-              <div
+              <motion.div
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.9 }}
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering the parent `onClick`
                 copyToClipboard(gradient.colorGradient); // Copy gradient color
@@ -56,7 +57,7 @@ const ColorGradient = () => {
                   {gradient.gradientEnd}
                 </p>
                 <i className="ri-file-copy-line text-white absolute right-4 bottom-2 text-[1.2rem] cursor-pointer hover:scale-125 transition ease-in-out"></i>
-              </div>
+              </motion.div>
             );
           })}
         </div>
